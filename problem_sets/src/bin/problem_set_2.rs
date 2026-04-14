@@ -1,6 +1,6 @@
 fn main() {
    // Problem 1.1: DNA Sequence printing and length
-   let dna: &str = "ATCGAATTGGCC"; //length of 12
+   let dna: &str = "ATCGAATTGGCCTGA"; //length of 15
    let length = dna.len();
    println!("{dna} length is  {length}");
 
@@ -39,6 +39,16 @@ fn main() {
    // Problem 2.2: Transcriber
    let rna_seq: String = transcriber(dna);
    println!("{} transcribed to RNA is {}", dna, rna_seq);
+
+   // Problem 2.3: First stop codon
+   let first_stop_codon: i32 = stop_codon_index(dna);
+   println!("Index of first stop codon is {}", first_stop_codon);
+
+   // Problem 3: Ownership and borrowing
+   let new_string = String::from("ACGT");
+   print_length(&new_string); // This is better because less memory allocation
+   print_length(&new_string.clone());
+
 
 }
 
@@ -80,6 +90,7 @@ fn gc_content(seq: &str) -> f64 {
 }
 
 // Problem 2.2: Transcriber
+// This is a longer more verbose way to do this...
 fn transcriber(dna: &str) -> String {
     // Initialize a new string
     let mut rna: String = String::new();
@@ -97,4 +108,25 @@ fn transcriber(dna: &str) -> String {
         };
     };
     rna
+}
+
+// Problem 2.3: Find the first stop codon (had a hard time with this one)
+fn stop_codon_index(seq: &str) -> i32 {
+    // Create an iterator
+    let mut i = 0;
+    while i + 3 <= seq.len() {
+        let codon =  &seq[i..i+3];
+        if codon == "TAA" || codon == "TAG" || codon == "TGA" {
+            return i as i32
+        }
+        i += 3;
+    };
+
+    -1
+}
+
+// Problem 3: Ownership and borrowing
+fn print_length(seq: &str) {
+    let sequence_length = seq.len();
+    println!("{sequence_length}")
 }
