@@ -14,7 +14,23 @@ fn main() {
    println!("Complement of A is {a_complement}");
    println!("Complement of T is {t_complement}");
    println!("Complement of C is {c_complement}");
-   println!("Complement of G is {g_complement}")
+   println!("Complement of G is {g_complement}");
+
+   // Problem 1.3: Codon to amino acid
+   let start_codon: &str = translator("ATG");
+   let stop_codon: &str = translator("TGA");
+   let other_codon: &str = translator("AAA");
+   dbg!(start_codon, stop_codon, other_codon);
+
+   // Problem 1.4: Count the Gs
+   let mut g_count: i64 = 0;
+   
+   for base in dna.chars() {
+     if base == 'G' {
+        g_count = g_count + 1;
+     };
+   };
+   println!("Number of G in {dna} is {g_count}")
 
 }
 
@@ -30,5 +46,14 @@ fn complement(base: char) -> char {
         'G' => 'C',
         'g' => 'C',
         _ => 'X',
+    }
+}
+
+// Problem 1.3: Codon to amino acid
+fn translator(codon: &str) -> &'static str {
+    match codon {
+        "ATG" | "atg" => "Met (Start)",
+        "TAA" | "taa" | "TGA" | "tga" => "Stop",
+        _ => "Other",
     }
 }
