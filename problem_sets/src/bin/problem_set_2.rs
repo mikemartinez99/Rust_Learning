@@ -36,6 +36,10 @@ fn main() {
    let gc_prop: f64 = gc_content(dna);
    println!("GC content: {:.2}%", gc_prop);
 
+   // Problem 2.2: Transcriber
+   let rna_seq: String = transcriber(dna);
+   println!("{} transcribed to RNA is {}", dna, rna_seq);
+
 }
 
 // Problem 1.2: Watson-Crick complementer
@@ -73,4 +77,24 @@ fn gc_content(seq: &str) -> f64 {
     };
     let gc_prop: f64 = gc_count/length * 100.0;
     gc_prop
+}
+
+// Problem 2.2: Transcriber
+fn transcriber(dna: &str) -> String {
+    // Initialize a new string
+    let mut rna: String = String::new();
+    
+    // Loop through the characters of DNA string
+    for base in dna.chars(){
+        if base == 'A' {
+            rna.push('T')
+        } else if base == 'T' {
+            rna.push('U')
+        } else if base == 'C' {
+            rna.push('G')
+        } else {
+            rna.push('C')
+        };
+    };
+    rna
 }
