@@ -30,7 +30,11 @@ fn main() {
         g_count = g_count + 1;
      };
    };
-   println!("Number of G in {dna} is {g_count}")
+   println!("Number of G in {dna} is {g_count}");
+
+   // Problem 2.1: GC content as a percentage
+   let gc_prop: f64 = gc_content(dna);
+   println!("GC content: {:.2}%", gc_prop);
 
 }
 
@@ -56,4 +60,17 @@ fn translator(codon: &str) -> &'static str {
         "TAA" | "taa" | "TGA" | "tga" => "Stop",
         _ => "Other",
     }
+}
+
+// Problem 2.1: GC content as a percentage
+fn gc_content(seq: &str) -> f64 {
+    let mut gc_count: f64 = 0.0;
+    let length = seq.len() as f64;
+    for base in seq.chars() {
+        if base == 'G' || base == 'C' {
+            gc_count += 1.0
+        };
+    };
+    let gc_prop: f64 = gc_count/length * 100.0;
+    gc_prop
 }
