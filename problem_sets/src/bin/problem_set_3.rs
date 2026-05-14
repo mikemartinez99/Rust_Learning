@@ -115,8 +115,21 @@ fn dna_2_rna(dna_string: &str) {
 }
 
 // Function to get expression matrix stats
-fn expression_stats(expression_matrix) {
-    
+fn expression_stats(expression_matrix: Vec<Vec<i32>>) {
+    for (i, gene) in expression_matrix.iter().enumerate() {
+        let sum: i32 = gene.iter().sum();
+        let mean = sum as f64 / gene.len() as f64;
+        println!("Gene{} total counts: {}", i + 1, sum);
+        println!("Gene{} average counts: {}", i + 1, mean);
+    };
+
+    let col_sums: Vec<i32> = (0..expression_matrix[0].len())
+        .map(|col| expression_matrix.iter().map(|row| row[col]).sum())
+        .collect();
+
+    for (i, cell_sum) in col_sums.iter().enumerate() {
+        println!("Cell{} total counts: {}", i + 1, cell_sum);
+    }
 }
 
 
@@ -169,24 +182,7 @@ fn main() {
         vec![3, 5, 1, 2],
         vec![20, 18, 25, 30],
     ];
-
-    for (i, gene) in exp_mat.iter().enumerate() {
-        let sum: i32 = gene.iter().sum();
-        let mean = sum as f64 / gene.len() as f64;
-        println!("Gene{} total counts: {}", i + 1, sum);
-        println!("Gene{} average counts: {}", i + 1, mean);
-    };
-
-
-    let n_cols = exp_mat[0].len();
-    for col in 0..n_cols {
-        let mut cell_count = 0;
-        for row in &exp_mat {
-            cell_count += row[col];
-        };
-        println!("Total counts per cell: {:?}", cell_count);
-    }
-
+    expression_stats(exp_mat.clone());
 
  
 }
